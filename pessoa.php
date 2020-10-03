@@ -52,8 +52,6 @@
     
     }
 
-# [Fri Oct  2 22:47:59 2020] PHP Warning:  mysqli_fetch_row() expects parameter 1 to be mysqli_result, bool given in /home/silas/Documents/aulas/trabalho_prog3/trabalho_uemg_php/pessoa.php on line 31
-    // porra era um bagulho a mais ali q tinha duplicado kkkk
     ?>
 <!DOCTYPE html>
 <html lang="pt-br">
