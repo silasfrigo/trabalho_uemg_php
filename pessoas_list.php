@@ -3,7 +3,6 @@
     require_once('variaveis.php');
     require_once('conexao.php');
     
-    //$id_usuario = $_GET["id_usuario"];
     
     //recuperando dados da sessao
     $id_usuario   = $_SESSION["id_usuario"];   
@@ -98,7 +97,6 @@
                                echo("<td>$emailPessoa</td>");
                                echo("<td>");
                                echo("<a class='btn btn-lg btn-success' href='pessoa.php?idPessoa=$idPessoa' role='button'>Editar</a>&nbsp;");
-                               echo("<a class='btn btn-lg btn-danger' href='pessoa_excluir.php?idPessoa=$idPessoa' role='button'>Excluir</a>");
                                echo("</td>");
                                echo("</tr>");
                             }                
