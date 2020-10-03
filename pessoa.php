@@ -5,18 +5,18 @@
     
     
 
-
     $idPessoa = $_GET['idPessoa'];
+
     //recuperando dados da sessao
-     $id_usuario   = $_SESSION["id_usuario"];
-     $tipoAcesso   = $_SESSION["tipo_acesso"];    
-     $nome_usuario = "";
-     
-     $sql = "SELECT nome FROM usuarios WHERE id = ".$id_usuario;
-     $resp = mysqli_query($conexao_bd, $sql);
-     if($rows=mysqli_fetch_row($resp)){
-         $nome_usuario = $rows[0];
-     }
+    $id_usuario   = $_SESSION["id_usuario"];
+    $tipoAcesso   = $_SESSION["tipo_acesso"];    
+    $nome_usuario = "";
+    
+    $sql = "SELECT nome FROM usuarios WHERE id = ".$id_usuario;
+    $resp = mysqli_query($conexao_bd, $sql);
+    if($rows=mysqli_fetch_row($resp)){
+        $nome_usuario = $rows[0];
+    }
     
     
     
@@ -26,33 +26,33 @@
     $cepPessoa  = "";
     $telefonePessoa   = "";
     $emailPessoa   = "";
+    $estadoPessoa   = "";
+    $cidadePessoa   = "";
+    $enderecoPessoa   = "";
+    $complementoPessoa   = "";
+    $celularPessoa   = "";
     
     
-    $sql = "SELECT nome, numero, datanascimento, cep, telefone, email FROM pessoas where idPessoa = ".$idPessoa;
-            
+    $sql = "SELECT nome, numero, datanascimento, cep, telefone, email, estado, cidade, endereco, complemento, celular FROM pessoas where idPessoa = ".$idPessoa;
+    
     $resp = mysqli_query($conexao_bd, $sql);
-    if($rows=mysqli_fetch_row($resp)){
-       $nomePessoa = $rows[0];      
-       $numeroPessoa = $rows[1];
-       $datanascPessoa = $rows[2];
-       $cepPessoa  = $rows[3];
-       $telefonePessoa   = $rows[4];
-       $emailPessoa   = $rows[5];
-    }
-
-    function Mask($mask,$str){
-
-        $str = str_replace(" ","",$str);
-    
-        for($i=0;$i<strlen($str);$i++){
-            $mask[strpos($mask,"#")] = $str[$i];
+    if($resp){
+        if($rows=mysqli_fetch_row($resp)){
+            $nomePessoa = $rows[0];      
+            $numeroPessoa = $rows[1];
+            $datanascPessoa = $rows[2];
+            $cepPessoa  = $rows[3];
+            $telefonePessoa   = $rows[4];
+            $emailPessoa   = $rows[5];
+            $estadoPessoa   = $rows[6];
+            $cidadePessoa   = $rows[7];
+            $enderecoPessoa   = $rows[8];
+            $complementoPessoa   = $rows[9];
+            $celularPessoa   = $rows[10];
         }
-    
-        return $mask;
-    
     }
 
-    ?>
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
     <head>
@@ -109,6 +109,15 @@
                 <form
                     method="post"
                     action="pessoa_gravar.php">
+
+                    <div class="form-group">
+                        <label for="inputEmail">E-mail:</label>
+                        <input type="email" class="form-control" id="inputEmail" 
+                            name="inputEmail" placeholder="E-mail"
+                            value="<?php echo($emailPessoa); ?>"
+                            >
+                    </div>
+
                     <div class="form-group">
                         <label for="inputNome">Nome da pessoa:</label>
                         <input type="text" class="form-control" id="inputNome" 
@@ -117,13 +126,7 @@
                             >
                             
                     </div>
-                    <div class="form-group">
-                        <label for="inputNumero">Numero do endereço:</label>
-                        <input type="text" class="form-control" id="inputNumero" 
-                            name="inputNumero" placeholder="Numero do endereço" onkeypress="return isNumberKey(event)"
-                            value="<?php echo($numeroPessoa); ?>"
-                            >
-                    </div>
+
                     <div class="form-group">
                         <label for="inputDataNasc">Data de Nascimento:</label>
                         <input type="text" class="form-control date" id="inputDataNasc" 
@@ -131,27 +134,68 @@
                             value="<?php echo($datanascPessoa); ?>"
                             >
                     </div>
+
                     <div class="form-group">
                         <label for="inputCep">CEP:</label>
                         <input type="text" class="form-control cep" id="inputCep" 
                             name="inputCep" placeholder="CEP"
-                            value="<?php echo($cepPessoa); ?>"
-                            
+                            value="<?php echo($cepPessoa); ?>"                            
+                            >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputEstado">Estado:</label>
+                        <input type="text" class="form-control" id="inputEstado" 
+                            name="inputEstado" placeholder="Estado"
+                            value="<?php echo($estadoPessoa); ?>"                            
+                            >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputCidade">Cidade:</label>
+                        <input type="text" class="form-control" id="inputCidade" 
+                            name="inputCidade" placeholder="Cidade"
+                            value="<?php echo($cidadePessoa); ?>"                            
+                            >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputEndereco">Endereço:</label>
+                        <input type="text" class="form-control" id="inputEndereco" 
+                            name="inputEndereco" placeholder="Endereço"
+                            value="<?php echo($enderecoPessoa); ?>"                            
+                            >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputNumero">Numero do endereço:</label>
+                        <input type="text" class="form-control" id="inputNumero" 
+                            name="inputNumero" placeholder="Numero do endereço" onkeypress="return isNumberKey(event)"
+                            value="<?php echo($numeroPessoa); ?>"
+                            >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputComplemento">Complemento:</label>
+                        <input type="text" class="form-control" id="inputComplemento" 
+                            name="inputComplemento" placeholder="Complemento"
+                            value="<?php echo($complementoPessoa); ?>"                            
+                            >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputCelular">Celular:</label>
+                        <input type="text" class="form-control phone_with_ddd" id="inputCelular" 
+                            name="inputCelular" placeholder="Celular"
+                            value="<?php echo($celularPessoa); ?>"
                             >
                     </div>
 
                     <div class="form-group">
                         <label for="inputTelefone">Telefone:</label>
-                        <input type="text" class="form-control phone_with_ddd" id="inputTelefone" 
+                        <input type="text" class="form-control phone" id="inputTelefone" 
                             name="inputTelefone" placeholder="Telefone"
                             value="<?php echo($telefonePessoa); ?>"
-                            >
-                    </div>
-                    <div class="form-group">
-                        <label for="inputEmail">E-mail:</label>
-                        <input type="email" class="form-control" id="inputEmail" 
-                            name="inputEmail" placeholder="E-mail"
-                            value="<?php echo($emailPessoa); ?>"
                             >
                     </div>
                     
@@ -170,6 +214,7 @@
             $('.date').mask('00/00/0000');
             $('.cep').mask('00.000-000');
             $('.phone_with_ddd').mask('(00) 00000-0000');
+            $('.phone').mask('0000-0000');
         });
         </script>
 

@@ -48,6 +48,9 @@
                         <li class="nav-item ">
                             <a class="nav-link" href="admin.php">Home <span class="sr-only">(current)</span></a>
                         </li>
+                        <?php 
+                            if($tipoAcesso != 3) {
+                            ?>
                         <li class="nav-item dropdown active">
                             <a class="nav-link dropdown-toggle" href="#" id="dropdown09" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cadastros</a>
                             <div class="dropdown-menu" aria-labelledby="dropdown09">
@@ -56,6 +59,9 @@
                                 <a class="dropdown-item" href="#">Cadastro de pacientes</a>
                             </div>
                         </li>
+                        <?php
+                            }
+                            ?>
                     </ul>
                     <ul class="navbar-nav navbar-right">
                         <li class="nav-item dropdown">
@@ -96,10 +102,16 @@
                                echo("<td>$nomePessoa</td>");
                                echo("<td>$emailPessoa</td>");
                                echo("<td>");
+                            
+                               if($tipoAcesso == 1){
                                echo("<a class='btn btn-lg btn-success' href='pessoa.php?idPessoa=$idPessoa' role='button'>Editar</a>&nbsp;");
-                               echo("</td>");
-                               echo("</tr>");
-                            }                
+                               echo("<a class='btn btn-lg btn-danger'  href='pessoa_excluir.php?idPessoa=$idPessoa' role='button'>Excluir</a>");
+                                   }else{
+                                   echo("-");
+                                   }
+                                   echo("</td>");
+                                   echo("</tr>");                       
+                                }                
                             ?>
                     </tbody>
                 </table>
