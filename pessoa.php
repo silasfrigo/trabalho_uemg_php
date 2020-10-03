@@ -3,8 +3,10 @@
     require_once('variaveis.php');
     require_once('conexao.php');
     
-     $idPessoa = $_GET['idPessoa'];
     
+
+
+    $idPessoa = $_GET['idPessoa'];
     //recuperando dados da sessao
      $id_usuario   = $_SESSION["id_usuario"];
      $tipoAcesso   = $_SESSION["tipo_acesso"];    
@@ -19,17 +21,16 @@
     
     
     $nomePessoa  = "";
-    $numeroPessoa = 0;
+    $numeroPessoa = "";
     $datanascPessoa = "";
     $cepPessoa  = "";
     $telefonePessoa   = "";
     $emailPessoa   = "";
     
     
-    $sql = "SELECT nome, numero, datanascimento, cep, telefone, email FROM pessoas";
-                   
+    $sql = "SELECT nome, numero, datanascimento, cep, telefone, email FROM pessoas where idPessoa = ".$idPessoa;
+            
     $resp = mysqli_query($conexao_bd, $sql);
-       
     if($rows=mysqli_fetch_row($resp)){
        $nomePessoa = $rows[0];      
        $numeroPessoa = $rows[1];
@@ -37,9 +38,22 @@
        $cepPessoa  = $rows[3];
        $telefonePessoa   = $rows[4];
        $emailPessoa   = $rows[5];
-    }  
+    }
+
+    function Mask($mask,$str){
+
+        $str = str_replace(" ","",$str);
     
+        for($i=0;$i<strlen($str);$i++){
+            $mask[strpos($mask,"#")] = $str[$i];
+        }
     
+        return $mask;
+    
+    }
+
+# [Fri Oct  2 22:47:59 2020] PHP Warning:  mysqli_fetch_row() expects parameter 1 to be mysqli_result, bool given in /home/silas/Documents/aulas/trabalho_prog3/trabalho_uemg_php/pessoa.php on line 31
+    // porra era um bagulho a mais ali q tinha duplicado kkkk
     ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -92,16 +106,8 @@
                     </ul>
                 </div>
             </nav>
-            <!-- Main component for a primary marketing message or call to action -->
             <div class="jumbotron">
-                <!--
-                    $nomePessoa = $rows[0];      
-                    $numeroPessoa = $rows[1];
-                    $datanascPessoa = $rows[2];
-                    $cepPessoa  = $rows[3];
-                    $telefonePessoa   = $rows[4];
-                    $emailPessoa   = $rows[5];
-                    !-->
+
                 <form
                     method="post"
                     action="pessoa_gravar.php">
@@ -109,60 +115,66 @@
                         <label for="inputNome">Nome da pessoa:</label>
                         <input type="text" class="form-control" id="inputNome" 
                             name="inputNome" placeholder="Nome da pessoa" maxlength="100"
-                            
+                            value="<?php echo($nomePessoa); ?>"
                             >
                             
                     </div>
-                    <!-- Número do endereço, somente numérico! -->
                     <div class="form-group">
                         <label for="inputNumero">Numero do endereço:</label>
                         <input type="text" class="form-control" id="inputNumero" 
                             name="inputNumero" placeholder="Numero do endereço" onkeypress="return isNumberKey(event)"
-                            
+                            value="<?php echo($numeroPessoa); ?>"
                             >
                     </div>
                     <div class="form-group">
                         <label for="inputDataNasc">Data de Nascimento:</label>
-                        <input type="text" class="form-control" id="inputDataNasc" 
+                        <input type="text" class="form-control date" id="inputDataNasc" 
                             name="inputDataNasc" placeholder="Data de Nascimento"
-                            
+                            value="<?php echo($datanascPessoa); ?>"
                             >
                     </div>
                     <div class="form-group">
                         <label for="inputCep">CEP:</label>
-                        <input type="text" class="form-control" id="inputCep" 
+                        <input type="text" class="form-control cep" id="inputCep" 
                             name="inputCep" placeholder="CEP"
+                            value="<?php echo($cepPessoa); ?>"
                             
                             >
                     </div>
+
                     <div class="form-group">
                         <label for="inputTelefone">Telefone:</label>
-                        <input type="text" class="form-control" id="inputTelefone" 
+                        <input type="text" class="form-control phone_with_ddd" id="inputTelefone" 
                             name="inputTelefone" placeholder="Telefone"
-                            
-                            >
-                    </div>
-                    <div class="form-group">
-                        <label for="inputTelefone">Telefone:</label>
-                        <input type="text" class="form-control" id="inputTelefone" 
-                            name="inputTelefone" placeholder="Telefone"
-                            
+                            value="<?php echo($telefonePessoa); ?>"
                             >
                     </div>
                     <div class="form-group">
                         <label for="inputEmail">E-mail:</label>
                         <input type="email" class="form-control" id="inputEmail" 
                             name="inputEmail" placeholder="E-mail"
-                            
+                            value="<?php echo($emailPessoa); ?>"
                             >
                     </div>
                     
                     <input type="hidden" id="inputIdPessoa" name="inputIdPessoa" value="<?php echo($idPessoa) ?>">
                     <button type="submit" class="btn btn-success">Gravar</button>&nbsp;
-                    <a href="pessoa_list.php" class="btn btn-warning" role="button">Retornar</a>
+                    <a href="pessoas_list.php" class="btn btn-warning" role="button">Retornar</a>
                 </form>
             </div>
         </div>
+
+        <script src="./js/jquery-3.5.1.min.js" type="text/javascript"></script>
+        <script src="./js/jquery.mask.js" type="text/javascript"></script>
+
+        <script type="text/javascript">
+            $(document).ready(function(){
+            $('.date').mask('00/00/0000');
+            $('.cep').mask('00.000-000');
+            $('.phone_with_ddd').mask('(00) 00000-0000');
+        });
+        </script>
+
     </body>
     <?php
         //encerrando a conexao com mysql

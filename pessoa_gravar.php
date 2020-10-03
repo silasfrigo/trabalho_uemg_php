@@ -6,12 +6,18 @@
 
     $id_pessoa = $_POST["inputIdPessoa"];
 
-    $nome = $_POST["inputNome"];
-    $numero = $_POST["inputNumero"];
-    $datanasc  = $_POST["inputDataNasc"];
-    $cep = $_POST["inputCep"];
-    $telefone  = $_POST["inputTelefone"];
-    $email = $_POST["inputEmail"];
+    // $nome = ;
+    $nome = strtoupper($_POST["inputNome"]);
+    $numero = strtoupper($_POST["inputNumero"]);
+    $datanasc = strtoupper($_POST["inputDataNasc"]);
+    $cep = strtoupper($_POST["inputCep"]);
+    $telefone = strtoupper($_POST["inputTelefone"]);
+    $email = strtoupper($_POST["inputEmail"]);
+    // $numero = $_POST["inputNumero"];
+    // $datanasc  = $_POST["inputDataNasc"];
+    // $cep = $_POST["inputCep"];
+    // $telefone  = $_POST["inputTelefone"];
+    // $email = $_POST["inputEmail"];
     
     
     if($id_pessoa){

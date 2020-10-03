@@ -1,7 +1,7 @@
 <?php
    $conexao_bd = mysqli_connect(
                   "localhost",
-                  "silas",
+                  "root",
                   "1234",
                   "syspacientes");
    if(!$conexao_bd){
